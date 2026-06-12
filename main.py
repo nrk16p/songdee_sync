@@ -92,9 +92,12 @@ def get_vehicle_status(token: str) -> list:
     r.raise_for_status()
     data = r.json()
 
-    # response อาจเป็น list ตรง ๆ หรือห่อใน key เช่น GetVehicleStatusResult / d
+    # รูปแบบจริง: {"vResponseCode": 0, "vTotalRecords": 48, "vData": [...]}
     if isinstance(data, dict):
-        wrapped = pick(data, 'GetVehicleStatusResult', 'd', 'data', 'vehicles', 'result')
+        code = pick(data, 'vResponseCode')
+        if code is not None and str(code) != '0':
+            raise RuntimeError(f'GetVehicleStatus failed (vResponseCode={code}) — token อาจหมดอายุ')
+        wrapped = pick(data, 'vData', 'GetVehicleStatusResult', 'd', 'data', 'vehicles', 'result')
         if isinstance(wrapped, list):
             data = wrapped
         else:
@@ -117,20 +120,21 @@ def match_plate(vehicle_no: str) -> str | None:
 
 
 def parse_vehicle(v: dict) -> dict:
+    """field names ตาม response จริงของ vehtec (ทดสอบ 12/06/2026)"""
     return {
-        'vehicle_no': pick(v, 'VehicleNo', 'vehicleno', 'plateno', 'plate', 'vehicle'),
-        'unit_id'   : pick(v, 'UnitId', 'unitid', 'unit_id', 'deviceid', 'gpsid'),
-        'gps_status': pick(v, 'GpsStatus', 'gpsstatus', 'status'),
-        'driver'    : pick(v, 'Driver', 'drivername', 'driver_name'),
-        'address'   : pick(v, 'Address', 'location', 'address1'),
-        'lat'       : pick(v, 'Lat', 'latitude', 'lat'),
-        'lng'       : pick(v, 'Lon', 'Lng', 'longitude', 'lon', 'lng'),
-        'speed'     : pick(v, 'Speed', 'speed'),
-        'ignition'  : pick(v, 'Ignition', 'ignitionstate', 'acc'),
-        'odometer'  : pick(v, 'Odometer', 'odo', 'mileage'),
-        'fuel'      : pick(v, 'Fuel', 'fuellevel', 'fuel1'),
-        'datetime'  : pick(v, 'DateTime', 'datetime', 'gpsdate', 'timestamp'),
-        'network'   : pick(v, 'NetworkType', 'network', 'networktype'),
+        'vehicle_no': pick(v, 'vehicleno'),
+        'unit_id'   : pick(v, 'unitno'),
+        'gps_status': pick(v, 'gps'),                       # "A" = active
+        'driver'    : pick(v, 'drivername'),
+        'address'   : pick(v, 'location'),
+        'lat'       : pick(v, 'latitude'),
+        'lng'       : pick(v, 'longitude'),
+        'speed'     : pick(v, 'speed'),
+        'ignition'  : pick(v, 'ignition'),                  # "ON" / "OFF"
+        'odometer'  : pick(v, 'odometer'),
+        'fuel'      : pick(v, 'fueltank1', 'totalfuel'),
+        'datetime'  : pick(v, 'datetime'),                  # "12/06/2026 16:44:11" (เวลาไทย)
+        'network'   : pick(v, 'networktype'),
     }
 
 
