@@ -18,7 +18,7 @@ BACKEND_URL  = 'https://backend-tdm-qa.onrender.com/gpsdata'
 
 TARGET_PLATES = ['73-3484', '73-3485', '73-3483', '73-3486']
 PLATE_TYPE    = 'H'
-GPS_VENDOR    = 'vehtec'
+GPS_VENDOR    = 'songdee'  # ต้องตรงกับ gps_vendor ที่ลงทะเบียนใน backend DB
 
 TIMEOUT = 15
 # vehtec ส่งเวลาเป็นเวลาไทยอยู่แล้ว → 0; ถ้าเป็น UTC ให้เปลี่ยนเป็น 7
