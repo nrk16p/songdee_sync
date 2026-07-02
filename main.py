@@ -16,7 +16,18 @@ GETTOKEN_URL = 'http://www.vehtec.ai/api/VTService.svc/GetToken'
 STATUS_URL   = 'http://www.vehtec.ai/api/VTService.svc/GetVehicleStatus'
 BACKEND_URL  = 'https://backend-tdm-qa.onrender.com/gpsdata'
 
-TARGET_PLATES = ['73-3484', '73-3485', '73-3483', '73-3486']
+TARGET_PLATES = [
+    '73-3484',
+    '73-3485',
+    '73-3483',
+    '73-3486',
+    '73-3556',
+    '73-3554',
+    '73-3552',
+    '73-3560',
+    '73-3558',
+    '73-3557'
+]
 PLATE_TYPE    = 'H'
 GPS_VENDOR    = 'songdee'  # ต้องตรงกับ gps_vendor ที่ลงทะเบียนใน backend DB
 
