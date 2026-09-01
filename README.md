@@ -7,7 +7,7 @@
 1. **GetToken** — `GET /api/VTService.svc/GetToken?username=&password=` → ได้ token ชั่วคราว
 2. **GetVehicleStatus** — `GET /api/VTService.svc/GetVehicleStatus?jtoken=<token>` → สถานะรถทุกคันในบัญชี
 3. Filter เฉพาะทะเบียนเป้าหมาย: `73-3484, 73-3485, 73-3483, 73-3486` (แก้ใน `TARGET_PLATES` ใน main.py)
-4. POST เข้า `https://backend-tdm-qa.onrender.com/gpsdata` payload เดียวกับ hino (`gps_vendor: "vehtec"`)
+4. POST เข้า `https://backend-tdm.onrender.com/gpsdata` payload เดียวกับ hino (`gps_vendor: "vehtec"`)
 
 ## Run local
 

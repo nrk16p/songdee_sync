@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 # ── Config ────────────────────────────────────────────────────────────
 GETTOKEN_URL = 'http://www.vehtec.ai/api/VTService.svc/GetToken'
 STATUS_URL   = 'http://www.vehtec.ai/api/VTService.svc/GetVehicleStatus'
-BACKEND_URL  = 'https://backend-tdm-qa.onrender.com/gpsdata'
+BACKEND_URL  = 'https://backend-tdm.onrender.com/gpsdata'
 
 TARGET_PLATES = [
     '73-3484',
